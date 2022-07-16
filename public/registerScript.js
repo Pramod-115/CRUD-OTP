@@ -1,5 +1,5 @@
 
-console.log("js file loaded")
+console.log("js file loaded register page")
 
 // function signUp(e) {
 //     console.log("pressed")
@@ -8,23 +8,18 @@ console.log("js file loaded")
 //     // var formData = new FormData(document.querySelector('form'))
 //     // console.log(formData)
 // }
-const emailCheck = document.getElementById('emailSubmit');
-registerForm.addEventListener('submit', event => {
-    event.preventDefault();
-    console.log("email check")
-})
-
 
 
 const registerForm = document.getElementById('formSignup');
 registerForm.addEventListener('submit', event => {
     event.preventDefault();
+    console.log("pressed")
     const userData = {
         fullname: event.target[0].value,
         adress: event.target[1].value,
         email: event.target[2].value,
         contact_no: event.target[3].value,
-        dob: event.target[4].value,
+        dob: Date.parse(event.target[4].value),
     }
     console.log(userData)
     fetch("/users/signup", {
@@ -37,9 +32,9 @@ registerForm.addEventListener('submit', event => {
     }).then((response) => {
         response.json().then((res) => {
             console.log(res)
-            if (res.msg === 'ok') {
+            if (res.msg === 'redirect') {
                 console.log('redirecting....')
-                window.location.href = `/enterotp/${res.email}`;
+                window.location.href = `${res.to}`;
             }
         })
         
